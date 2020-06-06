@@ -1,15 +1,14 @@
 #!/bin/bash
 
 # parameters
-PWD=`pwd`
-INF=$PWD/$1
-TMP=$PWD/$1.tmp
-ACT=$PWD/$2
+INF=$1
+TMP=$1.tmp
+ACT=$2
 
 # detect parameters
 if [ -z "$2" ]; then
-    echo "Usage: ./info_txt2csv.sh [/path/to/file.txt] [/path/to/file.csv]"
-    echo ".csv will be generated based on .txt"
+    echo "Usage: ./rawinfo2actor.sh [/path/to/file.txt] [/path/to/file.txt]"
+    echo ".txt will be generated based on .txt"
     exit
 fi
 
@@ -21,13 +20,13 @@ fi
 #   主要演員：克里斯多福諾蘭,克里斯汀貝爾,米高肯恩,蓋瑞歐德曼,凱蒂荷姆絲,摩根費里曼,連恩尼遜
 #   影片類型：動作
 # ->
-#   克里斯多福諾蘭,,,
-#   克里斯汀貝爾,,,
-#   米高肯恩,,,
-#   蓋瑞歐德曼,,,
-#   凱蒂荷姆絲,,,
-#   摩根費里曼,,,
-#   連恩尼遜,,,
+#   克里斯多福諾蘭
+#   克里斯汀貝爾
+#   米高肯恩
+#   蓋瑞歐德曼
+#   凱蒂荷姆絲
+#   摩根費里曼
+#   連恩尼遜
 
 # generate a temp csv
 cp $INF $TMP
@@ -45,6 +44,7 @@ cp $INF $TMP
 # fix
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 `sed -i '' "" ':a;N;$!ba; s/\n/g' $TMP`
 `sed -i '' "" 's/,\+/,/g' $TMP`
 `sed -i '' "" 's/,/,,,\n/g' $TMP`
@@ -58,10 +58,13 @@ cp $INF $TMP
 `sed -i '' 's/,/,,\'$'\n/g' $TMP`
 `sed -i '' '$ d' $TMP`
 >>>>>>> dummy-kao/master
+=======
+`sed -i -e ':a' -e 'N' -e '$!ba' -e 's/\n//g' $TMP`
+`sed -i 's/,\+/,/g' $TMP`
+`sed -i 's/,/\'$'\n/g' $TMP`
+`sed -i '$ d' $TMP`
+>>>>>>> Sabrina/master
 
-# generate csv file and add attribute name to first line
-`touch $ACT`
-`echo "name,SSN,sex" > $ACT`
 # sort and uniq
-`sort $TMP | uniq >> $ACT`
+`sort $TMP | uniq > $ACT`
 rm $TMP
